@@ -1,0 +1,12 @@
+# gsea.py: GSEA enrichment example
+import scanpy as sc
+import gseapy as gp
+
+# Assume cluster '0' markers computed
+df = sc.get.rank_genes_groups_df(adata, group="0")
+gene_list = df['names'].tolist()[:100]  # top 100 genes
+
+res = gp.enrichr(gene_list=gene_list,
+                 gene_sets=['KEGG_2021_Human'],
+                 organism='Human', outdir=None)
+print(res.results[['Term','Adjusted P-value']].head())
