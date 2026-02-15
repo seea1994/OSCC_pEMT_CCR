@@ -1,0 +1,9 @@
+# trajectory.py: Pseudotime analysis example
+import scanpy as sc
+
+sc.pp.pca(adata)
+sc.pp.neighbors(adata, n_neighbors=10, n_pcs=15)
+
+sc.tl.diffmap(adata)
+sc.tl.dpt(adata)  # by default, uses a root cell with smallest index
+sc.pl.umap(adata, color="dpt_pseudotime", show=False)
