@@ -1,0 +1,22 @@
+# cell2location.py: Cell2location example
+import scanpy as sc
+from cell2location.models import RegressionModel, Cell2location
+
+# Reference scRNA-seq data (with cell_type labels, raw counts)
+adata_ref = sc.read_h5ad("path/to/sc_reference.h5ad")
+RegressionModel.setup_anndata(adata_ref, batch_key="batch", labels_key="cell_type")
+mod_ref = RegressionModel(adata_ref)
+mod_ref.train(max_epochs=200)
+mod_ref.export_posterior("ref_output", adata_ref)
+
+# Spatial Visium data (raw counts)
+adata_vis = sc.read_h5ad("path/to/visium_data.h5ad")
+Cell2location.setup_anndata(adata_vis, cell_state_df=mod_ref.get_posterior(adata_ref))
+mod = Cell2location(adata_vis)
+mod.train(max_epochs=200)
+mod.export_posterior("spatial_output", adata_vis)
+
+# Plot estimated abundance of a cell type
+ct = adata_ref.obs['cell_type'].cat.categories[0]
+adata_vis.obs[f"{ct}_abundance"] = mod.get_count_matrix(adata_vis)[ct]
+sc.pl.spatial(adata_vis, color=f"{ct}_abundance", cmap='magma', show=False)
