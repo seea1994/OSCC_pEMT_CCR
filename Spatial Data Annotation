@@ -1,0 +1,22 @@
+# spatial_annotation.py: Spatial data analysis example
+import scanpy as sc
+
+adata = sc.datasets.visium_sge(sample_id="V1_Human_Lymph_Node")
+adata.var_names_make_unique()
+adata.var['mt'] = adata.var_names.str.startswith("MT-")
+sc.pp.calculate_qc_metrics(adata, qc_vars=["mt"], inplace=True)
+
+sc.pp.filter_cells(adata, min_counts=1000)
+adata = adata[adata.obs.pct_counts_mt < 20].copy()
+sc.pp.filter_genes(adata, min_cells=3)
+
+sc.pp.normalize_total(adata)
+sc.pp.log1p(adata)
+sc.pp.highly_variable_genes(adata, flavor="seurat", n_top_genes=2000)
+
+sc.pp.pca(adata)
+sc.pp.neighbors(adata)
+sc.tl.umap(adata)
+sc.tl.leiden(adata, key_added="spatial_clusters")
+
+sc.pl.spatial(adata, img_key="hires", color="spatial_clusters", show=False)
