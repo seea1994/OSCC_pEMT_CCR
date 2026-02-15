@@ -1,0 +1,14 @@
+# annotation.py: Cell type annotation example
+import scanpy as sc
+
+# Assume adata.obs['cluster'] exists after clustering
+sc.tl.rank_genes_groups(adata, groupby="cluster", method="wilcoxon")
+sc.pl.rank_genes_groups_heatmap(adata, group="0", n_genes=5, show=False)
+
+# Map clusters to cell types (placeholder mapping)
+cluster_to_type = {"0": "T_cell", "1": "B_cell", "2": "Macrophage"}
+adata.obs["cell_type"] = adata.obs["cluster"].map(cluster_to_type).astype("category")
+
+# Visualize marker expression in annotated cell types
+markers = ["CD3D","CD19","CD68"]
+sc.pl.dotplot(adata, var_names=markers, groupby="cell_type", show=False)
