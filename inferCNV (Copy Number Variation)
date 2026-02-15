@@ -1,0 +1,19 @@
+# infercnv_analysis.R: inferCNV example
+# (Install via BiocManager if needed)
+# library(infercnv)
+
+infercnv_obj <- CreateInfercnvObject(
+  raw_counts_matrix="path/to/counts_matrix.txt",
+  annotations_file="path/to/annotations.txt",
+  delim="\t",
+  gene_order_file="path/to/gene_order.txt",
+  ref_group_names=c("Normal")
+)
+infercnv_obj <- run(
+  infercnv_obj,
+  cutoff=0.1,          # 0.1 for 10x data (1.0 for Smart-seq2)【44†L157-L163】
+  out_dir="infercnv_output",
+  cluster_by_groups=TRUE,
+  denoise=TRUE,
+  HMM=FALSE
+)
