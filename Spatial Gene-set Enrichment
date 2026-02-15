@@ -1,0 +1,11 @@
+# spatial_enrichment.py: Spatial enrichment example
+import scanpy as sc
+import gseapy as gp
+
+sc.tl.rank_genes_groups(adata, groupby="spatial_clusters", method="wilcoxon")
+genes = sc.get.rank_genes_groups_df(adata, group="0")['names'].tolist()[:100]
+
+enr = gp.enrichr(gene_list=genes,
+                 gene_sets=['GO_Biological_Process_2021'],
+                 organism='Human', outdir=None)
+print(enr.results[['Term','Adjusted P-value']].head())
