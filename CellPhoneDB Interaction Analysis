@@ -1,0 +1,7 @@
+# cellphonedb.sh: CellPhoneDB analysis example
+pip install cellphonedb   # (Python 3.6+)
+
+# Prepare input files:
+#   meta.txt: two columns (Cell, CellType)
+#   counts.h5ad: counts matrix (AnnData h5ad)
+cellphonedb method statistical_analysis meta.txt counts.h5ad --output-path cpdb_results
