@@ -1,0 +1,14 @@
+# visualization.py: Visualization example
+import scanpy as sc
+
+# UMAP colored by genes
+sc.pl.umap(adata, color=["GeneA","GeneB"], show=False)
+
+# Violin plots for markers
+sc.pl.violin(adata, keys=["GeneA","GeneB"], groupby="cell_type", show=False)
+
+# DotPlot of markers across cell types
+sc.pl.dotplot(adata, var_names=["GeneA","GeneB"], groupby="cell_type", show=False)
+
+# Spatial plot example (for spatial data)
+sc.pl.spatial(adata, img_key="hires", color=["GeneA"], show=False)
