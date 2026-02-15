@@ -1,0 +1,16 @@
+
+Package	Purpose	Version	Reference
+scanpy	Single-cell analysis library	≥1.9	Scanpy docs
+anndata	AnnData data structure	≥0.9	Scanpy docs
+numpy/pandas	Data handling	Latest	—
+scikit-learn	PCA, neighbors	Latest	—
+leidenalg	Leiden clustering	Latest	—
+bbknn	Batch-balanced neighbors	Latest	Scanpy tutorials
+gseapy	GSEA analysis	≥1.1.8	GSEAPY docs
+cellphonedb	Cell-cell interaction	≥5.0	CellPhoneDB docs
+scvi-tools/pyro	Deep learning backend (cell2loc)	≥0.15/1.8	Cell2location docs
+cell2location	Spatial deconvolution	≥0.6	Cell2location docs
+infercnv (R)	CNV inference (Bioconductor)	Latest	inferCNV GitHub/wiki
+matplotlib/seaborn	Plotting	Latest	—
+
+Note: Python packages via pip or conda; R packages via Bioconductor. Versions are suggestions based on recent releases.
